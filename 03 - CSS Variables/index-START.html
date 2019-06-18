@@ -12,7 +12,7 @@
     <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
 
     <label for="blur">Blur:</label>
-    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+    <input id="blur" type="range" name="blur" min="0" max="25" value="0" data-sizing="px">
 
     <label for="base">Base Color</label>
     <input id="base" type="color" name="base" value="#ffc600">
@@ -21,7 +21,11 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
-
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 0px;
+    }
     /*
       misc styles, nothing to do with CSS variables
     */
@@ -34,6 +38,9 @@
       font-weight: 100;
       font-size: 50px;
     }
+    .hl {
+      color: var(--base)
+    }
 
     .controls {
       margin-bottom: 50px;
@@ -42,9 +49,52 @@
     input {
       width: 100px;
     }
+
+    img {
+      padding: var(--spacing);
+      background-color: var(--base);
+      filter: blur(var(--blur)) 
+    }
+
   </style>
 
   <script>
+    // Selecting document objects
+    // const img = document.querySelector('img');
+    // const spacingRange = document.querySelector('#spacing');
+    // const blurRange = document.querySelector('#blur');
+    // const color = document.querySelector('#base');
+
+    // //Dataset variables
+    // const spacingData = spacingRange.dataset;
+    // const blurData = blurRange.dataset;
+    // const colorData = color.dataset;
+
+    // Functions
+    
+    // const updateSpacing = e => {
+    //   const value = e.target.value;
+    //   document.documentElement.style.setProperty('--spacing', value + spacingData.sizing);
+    // }
+    // const updateBlur = e => {
+    //   const value = e.target.value;
+    //   document.documentElement.style.setProperty('--blur', value + blurData.sizing);
+    // }
+    // const updateColor = e => {
+    //   const value = e.target.value;
+    //   document.documentElement.style.setProperty('--base', value);
+    // }
+    
+    // Event Listeners
+    // spacingRange.addEventListener('input', updateSpacing);
+    // blurRange.addEventListener('input', updateBlur);
+    // color.addEventListener('input', updateColor);
+    function updateInput(e) {
+      const suffix = this.dataset.sizing || '';
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
+    }
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => input.addEventListener('input', updateInput));
   </script>
 
 </body>
