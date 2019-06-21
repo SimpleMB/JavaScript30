@@ -24,11 +24,16 @@
     }
 
     .panels {
+      display: flex;
       min-height: 100vh;
       overflow: hidden;
     }
 
     .panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      /* Moje powyżej */
       background: #6B0F9C;
       box-shadow: inset 0 0 0 5px rgba(255,255,255,0.1);
       color: white;
@@ -53,9 +58,22 @@
 
     /* Flex Children */
     .panel > * {
+      border: 2px solid red;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Moje powyżej*/
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+    }
+
+    .panel>*:first-child {
+      transform: translateY(-100%);
+    }
+    .panel>*:last-child {
+      transform: translateY(100%);
     }
 
     .panel p {
@@ -71,6 +89,11 @@
 
     .panel.open {
       font-size: 40px;
+      flex: 5;
+    }
+    .panel.open > *:first-child,
+    .panel.open > *:last-child {
+      transform: translateY(0)
     }
 
   </style>
@@ -105,7 +128,12 @@
   </div>
 
   <script>
-
+    const panels= document.querySelectorAll('.panel');
+    const addOpen = function() {
+      console.log(this)
+      this.classList.toggle('open');
+    }
+    panels.forEach(panel => panel.addEventListener('click', addOpen));
   </script>
 
 
