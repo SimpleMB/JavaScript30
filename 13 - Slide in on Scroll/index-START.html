@@ -58,6 +58,20 @@
       };
     }
 
+    const imgs = document.querySelectorAll('img');
+
+    const checkScroll = function (e) {
+      console.log("Current sCroll: " + (window.scrollY + window.innerHeight));
+      imgs.forEach(img => {
+        const imgPosition = img.offsetTop + img.height / 3;
+        const imgSlideIn = window.scrollY + window.innerHeight;
+        imgPosition < imgSlideIn ? img.classList.add('active') : null;
+      });
+    }
+    
+    window.addEventListener('scroll', debounce(checkScroll));
+    
+
   </script>
 
   <style>
