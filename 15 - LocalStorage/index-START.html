@@ -51,34 +51,37 @@
         <input type="text" name="item" placeholder="Item Name" required />
         <input type="submit" value="+ Add Item" />
       </form>
+      <button class="check-all">Check All</button>
+      <button class="clear-all">Clear All</button>
+      <button class="uncheck-all">Uncheck All</button>
     </div>
 
     <script>
       const addItems = document.querySelector(".add-items");
       const itemsList = document.querySelector(".plates");
       const items = JSON.parse(localStorage.getItem("items")) || [];
+      const btnClear = document.querySelector('.clear-all');
+      const btnCheckAll = document.querySelector('.check-all');
+      const btnUncheckAll = document.querySelector('.uncheck-all');
       // const 
 
       const checkedItem = function (e) {
-        index = this.dataset.index;
+        if(!e.target.matches("input")) return // return if clicked item is not an input
+        index = e.target.dataset.index;
         items[index].done = !items[index].done;
         localStorage.setItem("items", JSON.stringify(items));
       }
 
       const populateList = (array = [], where) => {
-        if (array.length === 0 || array === null) return;
+        if (array === null) return;
         const list = array.map((item, index) => {
           return `
             <li>
-              <input id="${item.text}" type="checkbox" data-index="${index}" ${item.done && "checked"} ><label for="${item.text}">${item.text}</label>
+              <input id="${index}" type="checkbox" data-index="${index}" ${item.done && "checked"} ><label for="${index}">${item.text}</label>
             </li>
           `
         }).join('');
-        where.innerHTML = list;
-        const checkboxes = where.querySelectorAll('[type=checkbox]');
-        checkboxes.forEach(checkbox => {
-          checkbox.addEventListener('change', checkedItem);
-        });
+        where.innerHTML = list;        
       }
 
       const submitItem = function(e) {
@@ -90,13 +93,35 @@
         };
         items.push(item);
         localStorage.setItem("items", JSON.stringify(items));
-        populateList(JSON.parse(localStorage.getItem("items")), itemsList);
+        populateList(items, itemsList);
         addItems.reset();
       };
 
+      const clearAll = () => {
+        localStorage.removeItem("items");
+        items.splice(0, items.length);
+        populateList(items, itemsList);
+      }
+
+      const checkAll = () => {
+        items.forEach(item => item.done = true);
+        localStorage.setItem("items", JSON.stringify(items));
+        populateList(items, itemsList);;
+      }
+
+      const uncheckAll = () => {
+        items.forEach(item => item.done = false);
+        localStorage.setItem("items", JSON.stringify(items));
+        populateList(items, itemsList);
+      }
 
       addItems.addEventListener("submit", submitItem);
+      itemsList.addEventListener("click", checkedItem); // check what child of the itemsList is clicked
+      btnCheckAll.addEventListener('click', checkAll);
+      btnClear.addEventListener('click', clearAll);
+      btnUncheckAll.addEventListener('click', uncheckAll);
       populateList(items, itemsList);
+
     </script>
   </body>
 </html>
