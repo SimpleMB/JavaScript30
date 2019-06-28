@@ -1,40 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Mouse Shadow</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mouse Shadow</title>
+  </head>
+  <body>
+    <div class="top"></div>
+    <div class="hero">
+      <h1 contenteditable>🔥WOAH!</h1>
+    </div>
 
-  <div class="hero">
-    <h1 contenteditable>🔥WOAH!</h1>
-  </div>
+    <style>
+      html {
+        color: black;
+        font-family: sans-serif;
+      }
 
-  <style>
-  html {
-    color: black;
-    font-family: sans-serif;
-  }
+      body {
+        margin: 0;
+      }
+      .top {
+        min-height: 200vh;
+      }
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: black;
+      }
 
-  body {
-    margin: 0;
-  }
+      h1 {
+        text-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+        font-size: 100px;
+      }
+    </style>
 
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: black;
-  }
+    <script>
+      const text = document.querySelector(".hero h1");
 
-  h1 {
-    text-shadow: 10px 10px 0 rgba(0,0,0,1);
-    font-size: 100px;
-  }
-  </style>
-
-<script>
-</script>
-</body>
+      const handleShadowMove = e => {
+        const mousePositionX = e.clientX;
+        const mousePositionY = e.clientY;
+        const textPositionX = text.offsetLeft + text.offsetWidth / 2;
+        const textPositionY = text.offsetTop + text.offsetHeight / 2 - window.scrollY;
+        const shadowPositionX = (mousePositionX - textPositionX) / 4;
+        const shadowPositionY = (mousePositionY - textPositionY) / 4;
+        text.style.textShadow = `${shadowPositionX / 10}px ${shadowPositionY /
+          10}px 0 red`;
+      };
+      document.addEventListener("mousemove", handleShadowMove);
+    </script>
+  </body>
 </html>
