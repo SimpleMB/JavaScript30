@@ -182,6 +182,14 @@
     </li>
   </ul>
 <script>
+  const videos = [...document.querySelectorAll('[data-time]')];
+  const timeSum = videos.reduce((total, value) => {
+    const [minutes, seconds] = value.dataset.time.split(':');
+    const time = Number(minutes)*60 + Number(seconds);
+    return total + time
+  }, 0);
+  const time = `${Math.floor(timeSum / 3600)}h ${Math.floor((timeSum / 60) % 60)}min ${timeSum % 60}sec`;
+  console.log(time);
 </script>
 </body>
 </html>
