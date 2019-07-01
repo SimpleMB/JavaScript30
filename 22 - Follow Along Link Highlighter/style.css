@@ -17,6 +17,31 @@ body {
     linear-gradient(315deg, hsla(35, 95%, 55%, 1) 100%, hsla(35, 95%, 55%, 0) 70%);
 }
 
+body.active .cursor{
+  height: 75px;
+  width: 75px;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  transition: opacity 0.3s, scale 0.3s;
+  z-index: -10;
+}
+
+.cursor {
+  opacity: 0;transition: opacity 0.3s, scale 0.3s;
+}
+
+.cursor {
+  transform: scale(0);  
+}
+/* body.active .cursor-out {
+  transform: scale(0) !important;
+} */
+
 .wrapper {
   margin: 0 auto;
   max-width: 500px;
@@ -43,6 +68,7 @@ a {
   border-radius: 20px;
   display: block;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  transform: translate(500)
 }
 
 .menu {
